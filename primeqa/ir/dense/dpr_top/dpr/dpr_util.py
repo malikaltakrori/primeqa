@@ -1,4 +1,4 @@
-from transformers import (DPRQuestionEncoder, RagTokenizer, DPRQuestionEncoderTokenizer, RagTokenForGeneration)
+from transformers import (DPRQuestionEncoder, RagTokenizer, DPRQuestionEncoderTokenizer, DPRQuestionEncoderTokenizerFast, RagTokenForGeneration)
 import logging
 from typing import List, Union, Tuple
 from primeqa.ir.dense.dpr_top.torch_util.hypers_base import HypersBase
@@ -13,7 +13,7 @@ class DPROptions(HypersBase):
     def _post_init(self):
         super()._post_init()
 
-def tokenize_queries(tokenizer: Union[RagTokenizer, DPRQuestionEncoderTokenizer],
+def tokenize_queries(tokenizer: Union[RagTokenizer, DPRQuestionEncoderTokenizer, DPRQuestionEncoderTokenizerFast],
                      queries: Union[List[str], List[Tuple[str, str]]], *, max_length: int):
     """
 
@@ -53,7 +53,7 @@ def tokenize_queries(tokenizer: Union[RagTokenizer, DPRQuestionEncoderTokenizer]
     return model_inputs
 
 
-def queries_to_vectors(tokenizer: Union[RagTokenizer, DPRQuestionEncoderTokenizer], question_encoder,
+def queries_to_vectors(tokenizer: Union[RagTokenizer, DPRQuestionEncoderTokenizer, DPRQuestionEncoderTokenizerFast], question_encoder,
                        queries: Union[List[str], List[Tuple[str, str]]], *, max_query_length=None):
     """
 

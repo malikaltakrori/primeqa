@@ -71,7 +71,7 @@ class DPRSearcher():
         self.qencoder = DPRQuestionEncoder.from_pretrained(self.opts.qry_encoder_name_or_path)
         self.qencoder = self.qencoder.to(self.device)
         self.qencoder.eval()
-        self.tokenizer = DPRQuestionEncoderTokenizer.from_pretrained(self.opts.qry_encoder_name_or_path)
+        self.tokenizer = DPRQuestionEncoderTokenizerFast.from_pretrained(self.opts.qry_encoder_name_or_path)
 
         if self.opts.rescore_only:
             # since this is re-ranker only mode we don't need an index.
