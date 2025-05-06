@@ -109,12 +109,15 @@ def get_raw_datasets(fof, data_args, task_args, cache_dir, split='train'):
 
     if len(datasets_info) == 0:
         raise ValueError(f"No dataset or data file information is found in fof {fof}.")
+    
+    list_datasets = datasets.list_datasets()
+    list_datasets.append('squad')
     for i in range(len(datasets_info)):
         if 'dataset' not in datasets_info[i]:
             raise ValueError(f"Dataset name or path of data file is not found in {i}th record of fof {fof}.")
         if 'config' not in datasets_info[i]:
             # if HuggingFace dataset or self-contained python script for dataset processing
-            if datasets_info[i]['dataset'] in datasets.list_datasets() or datasets_info[i]['dataset'].endswith('.py'):
+            if datasets_info[i]['dataset'] in list_datasets or datasets_info[i]['dataset'].endswith('.py'):
                 datasets_info[i]['config'] = data_args.dataset_config_name
             else: # local data file(s)
                 datasets_info[i]['config'] = data_args.data_file_format
@@ -134,7 +137,7 @@ def get_raw_datasets(fof, data_args, task_args, cache_dir, split='train'):
     raw_datasets = []
     preprocessors = []
     for i, d_info in enumerate(datasets_info):
-        if d_info['dataset'] in datasets.list_datasets() or d_info['dataset'].endswith('.py'):
+        if d_info['dataset'] in list_datasets or d_info['dataset'].endswith('.py'):
             if 'natural_questions' in d_info['dataset']:
                 raw_dataset = datasets.load_dataset(
                     d_info['dataset'],

@@ -1,0 +1,2 @@
+tydiqa primary_task 1.0 primeqa.mrc.processors.preprocessors.tydiqa.TyDiQAPreprocessor
+squad plain_text 1.0 primeqa.mrc.processors.preprocessors.squad.SQUADPreprocessor
